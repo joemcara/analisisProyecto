@@ -22,7 +22,7 @@ def leerArchivo(ruta:str):
 
 def compararGraficas(archivo):
     diccionario = leerArchivo(archivo)
-    limiteSimilitud = 15
+    limiteDiferencia = 15
     arregloIguales = []
     arregloSimilares = []
     arregloDiferentes = []
@@ -39,7 +39,7 @@ def compararGraficas(archivo):
                 if diferencia == 0:
                     arregloIguales.append((int(id),int(arregloIds[indice])))
                 else:
-                    if diferencia>15:
+                    if diferencia>limiteDiferencia:
                         arregloDiferentes.append((int(id),int(arregloIds[indice])))
                     else:
                         arregloSimilares.append((int(id),int(arregloIds[indice])))
