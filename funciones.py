@@ -42,18 +42,18 @@ def compararGraficas(archivo):
                 diferencia = abs(m-arregloPendientes[indice])
 
                 if diferencia == 0:
-                    if id not in arregloIguales:
+                    if int(id) not in arregloIguales:
                         arregloIguales.append(int(id))
                     if  int(arregloIds[indice]) not in arregloIguales:
                         arregloIguales.append(int(arregloIds[indice]))
                 else:
                     if diferencia >= limiteDiferencia:
-                        if id not in arregloDiferentes:
+                        if int(id) not in arregloDiferentes:
                             arregloDiferentes.append(int(id))
                         if  int(arregloIds[indice]) not in arregloDiferentes:
                             arregloDiferentes.append(int(arregloIds[indice]))
                     else:
-                        if id not in arregloSimilares:
+                        if int(id) not in arregloSimilares:
                             arregloSimilares.append(int(id))
                         if  int(arregloIds[indice]) not in arregloSimilares:
                             arregloSimilares.append(int(arregloIds[indice]))
