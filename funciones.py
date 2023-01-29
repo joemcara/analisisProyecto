@@ -21,14 +21,11 @@ def leerArchivo(ruta:str):
 
 
 def compararGraficas(archivo):
-
     diccionario = leerArchivo(archivo)
-    limiteDiferencia = 15
-
+    limiteSimilitud = 15
     arregloIguales = []
     arregloSimilares = []
     arregloDiferentes = []
-
     arregloIds = []
     arregloPendientes = []
 
@@ -36,28 +33,16 @@ def compararGraficas(archivo):
         m = calcularPendiente(coordenadas)
         arregloIds.append(id)
         arregloPendientes.append(m)
-   
         if len(arregloPendientes) > 1:
             for indice in range(0,len(arregloPendientes)-1):
                 diferencia = abs(m-arregloPendientes[indice])
-
                 if diferencia == 0:
-                    if int(id) not in arregloIguales:
-                        arregloIguales.append(int(id))
-                    if  int(arregloIds[indice]) not in arregloIguales:
-                        arregloIguales.append(int(arregloIds[indice]))
+                    arregloIguales.append((int(id),int(arregloIds[indice])))
                 else:
-                    if diferencia >= limiteDiferencia:
-                        if int(id) not in arregloDiferentes:
-                            arregloDiferentes.append(int(id))
-                        if  int(arregloIds[indice]) not in arregloDiferentes:
-                            arregloDiferentes.append(int(arregloIds[indice]))
+                    if diferencia>15:
+                        arregloDiferentes.append((int(id),int(arregloIds[indice])))
                     else:
-                        if int(id) not in arregloSimilares:
-                            arregloSimilares.append(int(id))
-                        if  int(arregloIds[indice]) not in arregloSimilares:
-                            arregloSimilares.append(int(arregloIds[indice]))
-                        
+                        arregloSimilares.append((int(id),int(arregloIds[indice])))
     escribirArchivo(arregloIguales,arregloSimilares,arregloDiferentes)
 
 def calcularPendiente(coordenadas):
@@ -70,13 +55,13 @@ def calcularPendiente(coordenadas):
 def escribirArchivo(iguales,similares,diferentes):
     file = open("archivoRetorno","a")
     
-    file.write("iguales:")
+    file.write("IGUALES:\n")
     escribirArreglo(iguales,file)
 
-    file.write("similares:")
+    file.write("SIMILARES:\n")
     escribirArreglo(similares,file)
 
-    file.write("diferentes:")
+    file.write("DIFERENTES:\n")
     escribirArreglo(diferentes,file)
 
     file.close()
@@ -84,8 +69,6 @@ def escribirArchivo(iguales,similares,diferentes):
 
 def escribirArreglo(arreglo,file):
     for i in range(0,len(arreglo)):
-        file.write(str(arreglo[i]))
-        if(i<len(arreglo)-1):
-            file.write(";")
-    file.write("\n")
 
+        file.write(str(arreglo[i][0])+","+str(arreglo[i][1])+"\n")
+    file.write("\n")
