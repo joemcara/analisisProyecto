@@ -23,7 +23,7 @@ def leerArchivo(ruta:str):
 def compararGraficas(archivo):
 
     diccionario = leerArchivo(archivo)
-    limiteSimilitud = 15
+    limiteDiferencia = 15
 
     arregloIguales = []
     arregloSimilares = []
@@ -40,20 +40,25 @@ def compararGraficas(archivo):
         if len(arregloPendientes) > 1:
             for indice in range(0,len(arregloPendientes)-1):
                 diferencia = abs(m-arregloPendientes[indice])
+
                 if diferencia == 0:
-                    arregloIguales.append((int(id),int(arregloIds[indice])))
+                    if id not in arregloIguales:
+                        arregloIguales.append(int(id))
+                    if  int(arregloIds[indice]) not in arregloIguales:
+                        arregloIguales.append(int(arregloIds[indice]))
                 else:
-                    if porcentajeDiferencia(diferencia,limiteSimilitud) < 50:
-                        arregloDiferentes.append((int(id),int(arregloIds[indice])))
+                    if diferencia >= limiteDiferencia:
+                        if id not in arregloDiferentes:
+                            arregloDiferentes.append(int(id))
+                        if  int(arregloIds[indice]) not in arregloDiferentes:
+                            arregloDiferentes.append(int(arregloIds[indice]))
                     else:
-                        arregloSimilares.append((int(id),int(arregloIds[indice])))
+                        if id not in arregloSimilares:
+                            arregloSimilares.append(int(id))
+                        if  int(arregloIds[indice]) not in arregloSimilares:
+                            arregloSimilares.append(int(arregloIds[indice]))
+                        
     escribirArchivo(arregloIguales,arregloSimilares,arregloDiferentes)
-
-
-def porcentajeDiferencia(diferencia, valor:int):
-    x = diferencia*100
-    y = valor
-    return round(x/y,0)
 
 def calcularPendiente(coordenadas):
     y1 = int(coordenadas[len(coordenadas)-1][1])
